@@ -165,9 +165,12 @@ def confirm_join_airport(request, ride_id):
 	}
 	# email notif
 
+	current_passengers = ''
+	for r in ride.usrs.all():
+		current_passengers = current_passengers + '\n' + r
 
 	subject_line = 'Your Ride Request to ' + ride.end_destination
-	message = 'Hello!\n\nYour ride request has been created.\n\n' + 'For your records, we have created a request for ' + str(ride.date_time) + ', for destination ' + ride.end_destination + '. To make any changes, please visit the \"Your Rides\" page on our website.\n' + 'Thank you for using Princeton Go!'
+	message = 'Hello!\n\nYou have joined a carpool ride.\n\n' + 'For your records, you have requested to join a ride to' + str(ride.date_time) + ', for destination ' + ride.end_destination + 'The current passengers are: ' + current_passengers + '. To make any changes, please visit the \"Your Rides\" page on our website.\n' + 'Thank you for using Princeton Go!'
 	send_mail(subject_line, message,
 			  'Princeton Go <princetongo333@gmail.com>', [email],
 			  fail_silently=False,
